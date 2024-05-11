@@ -1,0 +1,49 @@
+.home {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  place-items: center;
+  gap: 20px;
+  width: 80%;
+}
+
+.grid div {
+  border-radius: 12px;
+  background: rgb(59, 86, 217);
+
+  color: white;
+  height: 200px;
+}
+
+.grid div h2 {
+  text-align: center;
+  padding: 40px;
+}
+
+.grid div button {
+  border-radius: 40px;
+  background: transparent;
+  margin-left: 140px;
+  border-color: white;
+  color: white;
+  width: 200px;
+  height: 50px;
+}
+
+.grid div button:hover {
+  background: white;
+  color: black;
+}
+
+.grid > div {
+  width: 100%;
+}
