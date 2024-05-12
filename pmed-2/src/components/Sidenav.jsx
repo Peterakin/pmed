@@ -3,9 +3,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/js/dist/dropdown";
 import "../components/Sidenav.css";
+import { useUserContext } from '../context/Usercontext';
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Sidenav = () => {
+  
+  const {logout, userExist} = useUserContext()
+  const navigate = useNavigate()
+
+  useEffect(() =>{
+    if(!userExist){
+      navigate('/login')
+    }
+  },[userExist, navigate])
+
   return (
         <div className="bg-dark col-auto col-md-2 min-vh-100 d-flex justify-content-between flex-column">
           <div>
@@ -69,7 +82,7 @@ const Sidenav = () => {
               <NavLink className="dropdown-item" to="/profile">
                 Profile
               </NavLink>
-              <NavLink className="dropdown-item disabled" to="/logout">
+              <NavLink className="dropdown-item" onClick={logout}>
                 Log Out
               </NavLink>
             </div>
