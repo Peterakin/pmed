@@ -1,69 +1,67 @@
 import React, { useState } from 'react';
 import Sidenav from '../components/Sidenav';
+import { useUserContext } from '../context/Usercontext';
 import './Record.css';
+import axios from 'axios';
 
 const Record = () => {
-  const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    dateOfBirth: '',
-    gender: '',
-    address: '',
-    phoneNumber: '',
-    bloodGroup: '',
-    genotype: '',
-    nationality: '',
-    lga: '',
-    religion: '',
-    allergies: false,
-  });
 
-  const handleInputChange = (e) => {
-    setForm({
-     ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const {userValue} = useUserContext()
 
-  const handleAllergiesChange = (e) => {
-    setForm({
-     ...form,
-      allergies: e.target.checked,
-    });
-  };
+  const [firstname, setFirstName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [dateofbirth, setDateOfBirth] = useState('')
+  const [gender, setGender] = useState('')
+  const [address, setAddress] = useState('')
+  const [phonenumber, setPhoneNumber] = useState('')
+  const [bloodgroup, setBloodgroup] = useState('')
+  const [genotype, setGenotype] = useState('')
+  const [nationality, setNationality] = useState('')
+  const [lga, setLga] = useState('')
+  const [religion, setReligion] = useState('')
+  const [allergies, setAllergies] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log(form);
-  };
+  const submitRecord = async(e) =>{
+    e.preventDefault()
+    try {
+    const record = await axios.post('http://localhost:1602/record', {firstname, lastname, dateofbirth, gender, address, phonenumber, bloodgroup, genotype, nationality, lga, religion, allergies, userid: userValue._id})
+
+    if(record.data.error){
+        return alert(record.data.error.message)
+    }
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 
   return (
     <div className='record'>
       <Sidenav />
       <div className="main-content">
         <h1>Record</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submitRecord}>
           <div style={{ display: 'flex' }}>
           <label>
             First Name:
-            <input type="text" name="firstName" value={form.firstName} onChange={handleInputChange} />
+            <input type="text" name="firstName" value={firstname} onChange={(e) =>setFirstName(e.target.value)} />
           </label>
           <br />
           <label style={{ marginLeft: '20px' }}>
             Last Name:
-            <input type="text" name="lastName" value={form.lastName} onChange={handleInputChange} />
+            <input type="text" name="lastName" value={lastname} onChange={(e) =>setLastName(e.target.value)}/>
           </label>
           <br />
           <label style={{ marginLeft: '20px' }}>
             Date of Birth:
-            <input type="date" name="dateOfBirth" value={form.dateOfBirth} onChange={handleInputChange} />
+            <input type="date" name="dateOfBirth" value={dateofbirth} onChange={(e) =>setDateOfBirth(e.target.value)} />
           </label>
           </div>
           <br />
           <label>
             Gender:
-            <select name="gender" value={form.gender} onChange={handleInputChange}>
+            <select name="gender" value={gender} onChange={(e) =>setGender(e.target.value)}>
               <option value=""></option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -72,18 +70,18 @@ const Record = () => {
           <br />
           <label>
             Address:
-            <textarea name="address" value={form.address} onChange={handleInputChange} />
+            <textarea name="address" value={address} onChange={(e) =>setAddress(e.target.value)} />
           </label>
           <br />
           <label>
             Phone Number:
-            <input type="tel" name="phoneNumber" value={form.phoneNumber} onChange={handleInputChange} />
+            <input type="tel" name="phoneNumber" value={phonenumber} onChange={(e) =>setPhoneNumber(e.target.value)} />
           </label>
           <br />
           <div style={{ display: 'flex' }}>
           <label>
             Blood Group:
-            <select name="bloodGroup" value={form.bloodGroup} onChange={handleInputChange}>
+            <select name="bloodGroup" value={bloodgroup} onChange={(e) =>setBloodgroup(e.target.value)}>
               <option value=""></option>
               <option value="A">A</option>
               <option value="B">B</option>
@@ -94,7 +92,7 @@ const Record = () => {
           <br />
           <label style={{ marginLeft: '20px' }}>
             Genotype:
-            <select name="genotype" value={form.genotype} onChange={handleInputChange}>
+            <select name="genotype" value={genotype} onChange={(e) =>setGenotype(e.target.value)}>
               <option value=""></option>
               <option value="AA">AA</option>
               <option value="AS">AS</option>
@@ -108,23 +106,23 @@ const Record = () => {
           <div style={{ display: 'flex' }}>
           <label>
             Nationality:
-            <input type="text" name="nationality" value={form.nationality} onChange={handleInputChange} />
+            <input type="text" name="nationality" value={nationality} onChange={(e) =>setNationality(e.target.value)}/>
           </label>
           <br />
           <label style={{ marginLeft: '20px' }}>
             LGA:
-            <input type="text" name="lga" value={form.lga} onChange={handleInputChange} />
+            <input type="text" name="lga" value={lga} onChange={(e) =>setLga(e.target.value)} />
           </label>
           <br />
           <label style={{ marginLeft: '20px' }}>
             Religion:
-            <input type="text" name="religion" value={form.religion} onChange={handleInputChange} />
+            <input type="text" name="religion" value={religion} onChange={(e) =>setReligion(e.target.value)} />
           </label>
           </div>
           <br />
           <label>
             Allergies:
-            <input type="checkbox" name="allergies" checked={form.allergies} onChange={handleAllergiesChange} />
+            <input type="text" name="allergies" value={allergies} onChange={(e) =>setAllergies(e.target.value)}/>
           </label>
           <br />
           <button type="submit">Submit</button>
