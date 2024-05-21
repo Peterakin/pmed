@@ -87,6 +87,41 @@ app.post('/create', async(req,res) => {
   }
 })
 
+app.get('/getrecord', async(req,res) => {
+  const body = req?.body;
+  if(!body.userid){
+    return res.status(400).json({
+      status: false,
+      error:{
+        messagee:"No userID"
+      }
+    })
+  }
+
+  const{firstname, lastname, dateofbirth, gender, address, phonenumber, bloodgroup, genotype, nationality, lga, religion, allergies, userid} = req.body;
+  try {
+    const recordExist = await Record.findOne({ userid })
+
+    if(!recordExist){
+      return res.status(404).json({
+        status: false,
+        error:{
+          message:"user does not exist"
+        }
+      })
+    }
+  
+    return res.status(200).json({
+      status:true,
+      data:{
+        recordExist
+      }
+    }) 
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 app.post('/record', async(req,res) => {
   const body = req?.body;
   if(!body.firstname || !body.lastname || !body.dateofbirth || !body.gender || !body.address || !body.phonenumber || !body.bloodgroup || !body.genotype || !body.nationality || !body.lga || !body.religion || !body.allergies || !body.userid){

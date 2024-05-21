@@ -5,6 +5,7 @@ import Record from './pages/Record';
 import Appointment from './pages/Appointment';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Userrecord from './pages/Userrecord';
 import UsercontextProvider from './context/Usercontext';
 import { Route, Routes } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/record' Component={Record}/>
         <Route path='/register' Component={Register}/>
         <Route path='/login' Component={Login}/>
+        <Route path='/userrecord' Component={Userrecord}/>
     </Routes>
     </UsercontextProvider>
     </>
