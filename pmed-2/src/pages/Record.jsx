@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Sidenav from '../components/Sidenav';
 import { useUserContext } from '../context/Usercontext';
+import { useNavigate } from 'react-router-dom';
 import './Record.css';
 import axios from 'axios';
 
@@ -21,6 +22,8 @@ const Record = () => {
   const [religion, setReligion] = useState('')
   const [allergies, setAllergies] = useState('')
 
+  const navigate = useNavigate()
+
   const submitRecord = async(e) =>{
     e.preventDefault()
     try {
@@ -29,6 +32,8 @@ const Record = () => {
     if(record.data.error){
         return alert(record.data.error.message)
     }
+
+    navigate('/userrecord')
 
     } catch (error) {
         console.error(error)

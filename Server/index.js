@@ -87,26 +87,27 @@ app.post('/create', async(req,res) => {
   }
 })
 
-app.get('/getrecord', async(req,res) => {
+app.post('/getrecord', async(req,res) => {
   const body = req?.body;
+
   if(!body.userid){
     return res.status(400).json({
       status: false,
       error:{
-        messagee:"No userID"
+        message:"No userID"
       }
     })
   }
 
   const{firstname, lastname, dateofbirth, gender, address, phonenumber, bloodgroup, genotype, nationality, lga, religion, allergies, userid} = req.body;
-  try {
-    const recordExist = await Record.findOne({ userid })
 
+  try {
+    const recordExist = await Record.findOne({ userid }).exec();
     if(!recordExist){
       return res.status(404).json({
         status: false,
         error:{
-          message:"user does not exist"
+          message:"user record does not exist"
         }
       })
     }
