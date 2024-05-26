@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser")
 const User = require('./model/user')
 const Record = require('./model/userrecord')
+const Appointment = require('./model/appointment')
 const bcrypt = require('bcrypt')
 
 require("dotenv").config();
@@ -14,6 +15,18 @@ app.use(bodyParser.json())
 app.get('/', (req,res) => {
     return res.status(200).send("Pearl")
 })
+
+// app.post('/appoinment', (req,res) => {
+//   const body = req?.body;
+//   if(!body.symptoms || !body.dateandtime){
+//     return res.status(400).json({
+//       status:false,
+//       error:{
+//         message:"Appointment date "
+//       }
+//     })
+//   }
+// })
 
 app.post('/login', async(req,res) => {
   const body = req?.body;
@@ -87,6 +100,11 @@ app.post('/create', async(req,res) => {
   }
 })
 
+// app.post('/appointment', async(req,res) =>{
+//   const body = req?.body;
+  
+// })
+
 app.post('/getrecord', async(req,res) => {
   const body = req?.body;
 
@@ -118,6 +136,21 @@ app.post('/getrecord', async(req,res) => {
         recordExist
       }
     }) 
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+app.get('/getusers', async(req, res) => {
+  const body = req?.body;
+  try {
+    const users = await User.find({})
+    return res.status(200).json({
+      status:true,
+      data:{
+        users
+      }
+    })
   } catch (error) {
     console.error(error)
   }

@@ -45,7 +45,7 @@ const Record = () => {
     <div className='record'>
       <Sidenav />
       <div className="main-content">
-        <h1>Record</h1>
+        <h1>Upload Record</h1>
         <form onSubmit={submitRecord}>
           <div style={{ display: 'flex' }}>
           <label>
