@@ -17,13 +17,20 @@ const Login = () => {
         const user = await axios.post('http://localhost:1602/login', {email, password})
 
         console.log(user.data)
+        const role = user.data.data.user.role;
+        
 
         if(user.data.error){
           return alert(user.data.error.message)
         }
 
         updateUser(user.data.data.user)
-        navigate('/')
+        if(role == "doctor"){
+          navigate('/drhome')
+        }else{
+          navigate('/')
+        }
+
       
       } catch (error) {
         console.error(error)

@@ -74,6 +74,7 @@ app.post('/create', async(req,res) => {
 
     const{email, fullname, password} = req.body;
     try{
+    const role = req.body?.isAdmin ? "doctor" : "user"
     const userExist = await User.findOne({
       email
     })
@@ -87,12 +88,12 @@ app.post('/create', async(req,res) => {
     }
     const hashPassword = await bcrypt.hash(password, 10)
 
-    await User.create({email, fullname, password: hashPassword})
+    await User.create({email, fullname, password: hashPassword,role})
 
     return res.status(201).json({
       status:true,
       data:{
-        email, fullname
+        email, fullname, role
       }
     });
   }catch(error){
@@ -144,7 +145,7 @@ app.post('/getrecord', async(req,res) => {
 app.get('/getusers', async(req, res) => {
   const body = req?.body;
   try {
-    const users = await User.find({})
+    const users = await User.find({role: "user"})
     return res.status(200).json({
       status:true,
       data:{

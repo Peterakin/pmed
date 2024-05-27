@@ -8,6 +8,7 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmpassword] = useState('')
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const navigate = useNavigate()
 
@@ -18,7 +19,7 @@ const Register = () => {
             alert("Passwords do not match")
             throw new Error('password do not match')
         }    
-        const user = await axios.post('http://localhost:1602/create', {email, fullname, password})
+        const user = await axios.post('http://localhost:1602/create', {email, fullname, password, isAdmin})
 
         if(user.data.error){
             return alert(user.data.error.message)
@@ -51,6 +52,10 @@ const Register = () => {
             <label>
                 Confirm password:
                 <input type="text" required  placeholder='Confirm password' value={confirmpassword} onChange={(e) =>setConfirmpassword(e.target.value)}/>
+            </label>
+            <label>
+                Do you want to create a Doctor's Account:
+                <input type="checkbox" checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
             </label>
             <button type="submit">Register</button>
         </form>
