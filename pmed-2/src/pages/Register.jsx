@@ -58,6 +58,7 @@ const Register = () => {
                 <input type="checkbox" checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
             </label>
             <button type="submit">Register</button>
+            <a href="/login" className='link' >Already have an account</a>
         </form>
     </div>
     </div>

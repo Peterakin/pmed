@@ -157,6 +157,21 @@ app.get('/getusers', async(req, res) => {
   }
 })
 
+app.get('/getdoctors',async(req,res) =>{
+  const body = req?.body;
+  try {
+    const users = await User.find({role: "doctor"})
+    return res.status(200).json({
+      status:true,
+      data:{
+        users
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 app.post('/record', async(req,res) => {
   const body = req?.body;
   if(!body.firstname || !body.lastname || !body.dateofbirth || !body.gender || !body.address || !body.phonenumber || !body.bloodgroup || !body.genotype || !body.nationality || !body.lga || !body.religion || !body.allergies || !body.userid){

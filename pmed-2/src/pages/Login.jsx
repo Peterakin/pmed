@@ -51,6 +51,7 @@ const Login = () => {
                 <input type="text" required placeholder='Password' value={password} onChange={(e) =>setPassword(e.target.value)}/>
             </label>
             <button type="submit">Login</button>
+            <a href="/register" className='link'>Dont have an account please register</a>
         </form>
     </div>
     </div>

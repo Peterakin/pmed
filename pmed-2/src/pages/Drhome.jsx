@@ -1,5 +1,3 @@
-
-
 import React, { useState , useEffect } from 'react'
 import Drsidenav from '../components/Drsidenav'
 import './Drhome.css'
