@@ -106,6 +106,22 @@ app.post('/create', async(req,res) => {
   
 // })
 
+app.post('/getuserrecord', async(req,res) => {
+  const body = req?.body;
+  const{ userid} = req.body;
+  try {
+    const records = await Record.findOne({ userid }).exec();
+    return res.status(200).json({
+      status:true,
+      data:{
+        records
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 app.post('/getrecord', async(req,res) => {
   const body = req?.body;
 

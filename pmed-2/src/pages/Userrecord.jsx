@@ -19,25 +19,64 @@ const Userrecord = () => {
   useEffect(() => {
     getUserrecord()
  }, [])
-    
 
   return (
     <div className="userrecord">
       <Sidenav />
-      <div>
+      <div className="medical-record-card">
         <h1>Medical Record</h1>
-        <h2>Firstname:{record.firstname}</h2>
-        <h2>Lastname:{record.lastname}</h2> 
-        <h2>Dateofbirth:{record.dateofbirth}</h2>
-        <h2>Gender:{record.gender}</h2>
-        <h2>Address:{record.address}</h2>
-        <h2>Phonenumber:{record.phonenumber}</h2>
-        <h2>Bloodgroup:{record.bloodgroup}</h2>
-        <h2>Genotype:{record.genotype}</h2>
-        <h2>Nationality:{record.nationality}</h2>
-        <h2>Lga:{record.lga}</h2>
-        <h2>Religion:{record.religion}</h2>
-        <h2>Allergies:{record.allergies}</h2>
+        <div className="record-section">
+          <h2>Patient Information</h2>
+          <ul>
+            <li>
+              <span>Firstname:</span> {record.firstname}
+            </li>
+            <li>
+              <span>Lastname:</span> {record.lastname}
+            </li>
+            <li>
+              <span>Date of Birth:</span> {record.dateofbirth}
+            </li>
+            <li>
+              <span>Phone Number:</span> {record.phonenumber}
+            </li>
+            <li>
+              <span>Gender:</span> {record.gender}
+            </li>
+           
+            <li>
+              <span>Religion:</span> {record.religion}
+            </li>
+          </ul>
+        </div>
+        <div className="record-section">
+          <h2>Demographics</h2>
+          <ul>
+            <li>
+              <span>Address:</span> {record.address}
+            </li>
+            <li>
+              <span>Nationality:</span> {record.nationality}
+            </li>
+            <li>
+              <span>LGA:</span> {record.lga}
+            </li>
+          </ul>
+        </div>
+        <div className="record-section">
+          <h2>Medical Information</h2>
+          <ul>
+            <li>
+              <span>Blood Group:</span> {record.bloodgroup}
+            </li>
+            <li>
+              <span>Genotype:</span> {record.genotype}
+            </li>
+            <li>
+              <span>Allergies:</span> {record.allergies}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

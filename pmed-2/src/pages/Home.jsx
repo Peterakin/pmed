@@ -13,7 +13,6 @@ const Home = () => {
   const gotToRecords = () => {
     navigate("/record");
   };
-
   return (
     <div className="home">
       <Sidenav />
