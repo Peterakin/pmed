@@ -5,7 +5,7 @@ const bodyParser = require("body-parser")
 const User = require('./model/user')
 const Record = require('./model/userrecord')
 const Appointment = require('./model/appointment')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 require("dotenv").config();
 const app = express();
@@ -16,17 +16,46 @@ app.get('/', (req,res) => {
     return res.status(200).send("Pearl")
 })
 
-// app.post('/appoinment', (req,res) => {
-//   const body = req?.body;
-//   if(!body.symptoms || !body.dateandtime){
-//     return res.status(400).json({
-//       status:false,
-//       error:{
-//         message:"Appointment date "
-//       }
-//     })
-//   }
-// })
+app.post('/appoinment', async(req,res) => {
+  const body = req?.body;
+  if(!body.symptoms ?? !body.dateandtime ?? !body.approved ?? !body.doctor ?? !body.userid ?? !body.prediction){
+    return res.status(400).json({
+      status:false,
+      error:{
+        message:"symptoms, dateandtime, prediction, approved, doctor and userid is required "
+      }
+    })
+  }
+
+  const{symptoms, dateandtime, prediction, approved, doctor, userid} = req.body;
+  try {
+    await Appointment.create({symptoms, dateandtime, prediction, approved, doctor, userid})
+
+    return res.status(201).json({
+      status:true,
+      data:{
+        symptoms, dateandtime, prediction, approved, doctor, userid
+      }
+    });
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+app.get('/getappointments', async(req,res) => {
+  const body = req?.body;
+  try {
+    const appointments = await Appointment.find()
+    return res.status(200).json({
+      status:true,
+      data:{
+        appointments
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
 
 app.post('/login', async(req,res) => {
   const body = req?.body;
@@ -100,11 +129,6 @@ app.post('/create', async(req,res) => {
     console.error(error)
   }
 })
-
-// app.post('/appointment', async(req,res) =>{
-//   const body = req?.body;
-  
-// })
 
 app.post('/getuserrecord', async(req,res) => {
   const body = req?.body;
