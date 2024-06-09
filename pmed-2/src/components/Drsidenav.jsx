@@ -50,6 +50,18 @@ const Drsidenav = () => {
                   </span>
                 </NavLink>
               </li>
+              <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
+                <NavLink
+                  to="/drchat" 
+                  className="nav-link text-white fs-5"
+                  aria-current="page"
+                >
+                  <i className="bi bi-person"></i>
+                  <span className="ms-2 d-none d-sm-inline">
+                    Chat with Patient
+                  </span>
+                </NavLink>
+              </li>
             </ul>
           </div>
           <div className="dropdown open">
