@@ -47,11 +47,11 @@ const Register = () => {
             </label>
             <label>
                 Password:
-                <input type="text" required  placeholder='Password' value={password} onChange={(e) =>setPassword(e.target.value)}/>
+                <input type="password" required  placeholder='Password' value={password} onChange={(e) =>setPassword(e.target.value)}/>
             </label>
             <label>
                 Confirm password:
-                <input type="text" required  placeholder='Confirm password' value={confirmpassword} onChange={(e) =>setConfirmpassword(e.target.value)}/>
+                <input type="password" required  placeholder='Confirm password' value={confirmpassword} onChange={(e) =>setConfirmpassword(e.target.value)}/>
             </label>
             <label>
                 Do you want to create a Doctor's Account:

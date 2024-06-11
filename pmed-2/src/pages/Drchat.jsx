@@ -50,19 +50,21 @@ const Drchat = () => {
 
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e) => {
     // Add new message to the conversation
-    setMessages([
-      ...messages,
-      {
-        id: 5,
-        conversation_id: 1,
-        sender_id: 1,
-        recipient_id: 2,
-        message_text: newMessage,
-        created_at: new Date().toISOString(),
-      },
-    ]);
+    e.preventDefault();
+    setChats(state=>{
+      messages:[
+        ...state.messages,
+        {
+          id:5,
+          conversation_id:1,
+          recipient_id:2,
+          created_at:"2022-01-01 12:00:20",
+          message_text:"is that me??"
+        }
+      ]
+    });
     setNewMessage("");
   };
 
@@ -84,7 +86,7 @@ const Drchat = () => {
             </div>
           ))}
         </div>
-        <form action="">
+        <form onSubmit={handleSendMessage}>
           <div className="dr-form-div">
             <input
               type="text"
@@ -92,7 +94,7 @@ const Drchat = () => {
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type a message......"
             />
-            <button className="dr-send-button" onClick={handleSendMessage}>
+            <button className="dr-send-button" type="submit">
               Send
             </button>
           </div>
