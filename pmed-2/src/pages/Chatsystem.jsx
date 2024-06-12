@@ -1,113 +1,51 @@
 import React, { useState, useEffect } from "react";
 import Sidenav from "../components/Sidenav";
 import "./Chatsystem.css";
+import axios from "axios";
+import { useUserContext } from "../context/Usercontext";
 
 const Chatsystem = () => {
-  const [chats, setChats] = useState({
-    conversations: [
-      {
-        id: 1,
-        user1_id: 1,
-        user2_id: 2,
-        created_at: "2022-01-01 12:00:00",
-      },
-    ],
-    messages: [
-      {
-        id: 1,
-        conversation_id: 1,
-        sender_id: 1,
-        recipient_id: 2,
-        message_text: "Hello, how are you?",
-        created_at: "2022-01-01 12:00:05",
-      },
-      {
-        id: 2,
-        conversation_id: 1,
-        sender_id: 2,
-        recipient_id: 1,
-        message_text: "I'm good, thanks!",
-        created_at: "2022-01-01 12:00:10",
-      },
-      {
-        id: 3,
-        conversation_id: 1,
-        sender_id: 1,
-        recipient_id: 2,
-        message_text: "What's up?",
-        created_at: "2022-01-01 12:00:15",
-      },
-      {
-        id: 4,
-        conversation_id: 1,
-        sender_id: 2,
-        recipient_id: 1,
-        message_text: "Not much, just chillin'",
-        created_at: "2022-01-01 12:00:20",
-      },
-    
-    ],
-  });
+  const { userValue } = useUserContext();
+  console.log(userValue);
+  const [chats, setChats] = useState([]);
 
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = (e) => {
-    // Add new message to the conversation
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    setChats({
-      conversations: [
-        {
-          id: 1,
-          user1_id: 1,
-          user2_id: 2,
-          created_at: "2022-01-01 12:00:00",
-        },
-      ],
-      messages: [
-        {
-          id: 1,
-          conversation_id: 1,
-          sender_id: 1,
-          recipient_id: 2,
-          message_text: "Hello, how are you?",
-          created_at: "2022-01-01 12:00:05",
-        },
-        {
-          id: 2,
-          conversation_id: 1,
-          sender_id: 2,
-          recipient_id: 1,
-          message_text: "I'm good, thanks!",
-          created_at: "2022-01-01 12:00:10",
-        },
-        {
-          id: 3,
-          conversation_id: 1,
-          sender_id: 1,
-          recipient_id: 2,
-          message_text: "What's up?",
-          created_at: "2022-01-01 12:00:15",
-        },
-        {
-          id: 4,
-          conversation_id: 1,
-          sender_id: 2,
-          recipient_id: 1,
-          message_text: "Not much, just chillin'",
-          created_at: "2022-01-01 12:00:20",
-        },
-        {
-          id: 5,
-          conversation_id: 1,
-          sender_id: 2,
-          recipient_id: 1,
-          message_text: "So.....'",
-          created_at: "2022-01-01 12:00:20",
-        },
-      ],
-    });
-    setNewMessage("");
+    try {
+      const { data } = await axios.post("http://localhost:1602/sendmessage", {
+        senderId: userValue._id,
+        recipientId: "66562e8d9c4d8b488e0b6d27",
+        messageText: newMessage,
+      });
+
+      console.log(data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const fetchMessage = async () => {
+    try {
+      const { data } = await axios.post("http://localhost:1602/getmessages", {
+        senderId: userValue._id,
+        recipientId: "66562e8d9c4d8b488e0b6d27",
+      });
+
+      if (data) setChats(data.data.messages);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const intId = setInterval(() => {
+      fetchMessage();
+    }, 2500);
+
+    return () => clearInterval(intId);
+  }, []);
 
   return (
     <div className="chat">
@@ -116,14 +54,14 @@ const Chatsystem = () => {
         <div className="chat-container">
           <h2>Patient Chat</h2>
           <div className="message-list">
-            {chats.messages.map((chat) => (
+            {chats.map((chat) => (
               <div
                 key={chat.id}
                 className={`message ${
-                  chat.sender_id === 1 ? "sender" : "recipient"
+                  chat.senderId !== userValue._id ? "sender" : "recipient"
                 }`}
               >
-                <p>{chat.message_text}</p>
+                <p>{chat.messageText}</p>
                 <span>{chat.created_at}</span>
               </div>
             ))}

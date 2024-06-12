@@ -1,76 +1,78 @@
 .dr-chat {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-  }
-  .dr-chat-container {
-    width: 400px;
-    margin: 40px;
-    margin-left: 30%;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dr-message-list {
-    padding: 20px;
-  }
-  
-  .dr-message {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 10px;
-    width: 80%;
-  }
-  
-  .dr-sender {
-    background-color: #f0f0f0;
-    float: left;
-    clear: both;
-  }
-  
-  .dr-recipient {
-    background-color: #cff;
-    float: right;
-    clear: both;
-  }
-  
-  .dr-message p {
-    margin: 0;
-  }
-  
-  .dr-message span {
-    font-size: 12px;
-    color: #999;
-  }
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+.dr-chat-container {
+  width: 400px;
+  margin: 40px;
+  margin-left: 30%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  form input{
-    width: 20px;
-  }
+.dr-message-list {
+  padding: 20px;
+  height: 400px;
+  overflow: scroll;
+}
 
-  .dr-form-div{
-    display: flex;
-  }
+.dr-message {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  width: 80%;
+}
 
-  .dr-form-div input{
-    width: 55%;
-  }
+.dr-sender {
+  background-color: #f0f0f0;
+  float: left;
+  clear: both;
+}
 
-  .dr-send-button {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  .dr-send-button:hover {
-    background-color: #3e8e41;
-  }
-  
-  .dr-send-button:active {
-    background-color: #3e8e41;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
+.dr-recipient {
+  background-color: #cff;
+  float: right;
+  clear: both;
+}
+
+.dr-message p {
+  margin: 0;
+}
+
+.dr-message span {
+  font-size: 12px;
+  color: #999;
+}
+
+form input {
+  width: 20px;
+}
+
+.dr-form-div {
+  display: flex;
+}
+
+.dr-form-div input {
+  width: 55%;
+}
+
+.dr-send-button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dr-send-button:hover {
+  background-color: #3e8e41;
+}
+
+.dr-send-button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

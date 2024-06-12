@@ -15,6 +15,12 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+io.on("connection", (socket) => {
+  socket.on("chat-rcvd", (msg) => {
+    console.log(msg);
+  });
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -381,7 +387,12 @@ app.post("/getmessages", async (req, res) => {
   }
 
   try {
-    const messages = await Chat.find({ senderId, recipientId }).exec();
+    const messages = await Chat.find({
+      senderId: { $in: [senderId, recipientId] },
+      recipientId: { $in: [senderId, recipientId] },
+    })
+      .sort({ createdAt: 1 })
+      .exec();
 
     return res.status(200).json({
       status: true,

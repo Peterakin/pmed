@@ -1,72 +1,48 @@
 import React, { useState, useEffect } from "react";
 import "./Drchat.css";
 import Drsidenav from "../components/Drsidenav";
+import axios from "axios";
+import { useUserContext } from "../context/Usercontext";
 
 const Drchat = () => {
-  const [chats, setChats] = useState({
-    conversations: [
-      {
-        id: 1,
-        user1_id: 1,
-        user2_id: 2,
-        created_at: "2022-01-01 12:00:00",
-      },
-    ],
-    messages: [
-      {
-        id: 1,
-        conversation_id: 1,
-        sender_id: 1,
-        recipient_id: 2,
-        message_text: "Hello, how are you?",
-        created_at: "2022-01-01 12:00:05",
-      },
-      {
-        id: 2,
-        conversation_id: 1,
-        sender_id: 2,
-        recipient_id: 1,
-        message_text: "I'm good, thanks!",
-        created_at: "2022-01-01 12:00:10",
-      },
-      {
-        id: 3,
-        conversation_id: 1,
-        sender_id: 1,
-        recipient_id: 2,
-        message_text: "What's up?",
-        created_at: "2022-01-01 12:00:15",
-      },
-      {
-        id: 4,
-        conversation_id: 1,
-        sender_id: 2,
-        recipient_id: 1,
-        message_text: "Not much, just chillin'",
-        created_at: "2022-01-01 12:00:20",
-      },
-    ],
-  });
-
+  const { userValue } = useUserContext();
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = (e) => {
-    // Add new message to the conversation
+  const [chats, setChats] = useState([]);
+
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    setChats(state=>{
-      messages:[
-        ...state.messages,
-        {
-          id:5,
-          conversation_id:1,
-          recipient_id:2,
-          created_at:"2022-01-01 12:00:20",
-          message_text:"is that me??"
-        }
-      ]
-    });
-    setNewMessage("");
+    try {
+      const { data } = await axios.post("http://localhost:1602/sendmessage", {
+        senderId: userValue._id,
+        recipientId: "6640bb8dc6a5bee3b67aadd0",
+        messageText: newMessage,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const fetchMessage = async () => {
+    try {
+      const { data } = await axios.post("http://localhost:1602/getmessages", {
+        senderId: userValue._id,
+        recipientId: "6640bb8dc6a5bee3b67aadd0",
+      });
+
+      if (data) setChats(data.data.messages);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const intId = setInterval(() => {
+      fetchMessage();
+    }, 2500);
+
+    return () => clearInterval(intId);
+  }, []);
 
   return (
     <div className="dr-chat">
@@ -74,14 +50,14 @@ const Drchat = () => {
       <div className="dr-chat-container">
         <h2>Dr Chat</h2>
         <div className="dr-message-list">
-          {chats.messages.map((chat) => (
+          {chats.map((chat) => (
             <div
               key={chat.id}
               className={`dr-message ${
-                chat.sender_id === 1 ? "dr-sender" : "dr-recipient"
+                chat.senderId !== userValue._id ? "dr-sender" : "dr-recipient"
               }`}
             >
-              <p>{chat.message_text}</p>
+              <p>{chat.messageText}</p>
               <span>{chat.created_at}</span>
             </div>
           ))}
