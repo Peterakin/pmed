@@ -4,14 +4,13 @@
   height: 100vh;
 }
 
-.appointment-h2{
+.appointment-h2 {
   margin-top: 40px;
 }
 
-.appointment-list{
+.appointment-list {
   width: 50%;
 }
-
 
 .main-content {
   flex: 1;
@@ -28,7 +27,7 @@
 .grid div {
   border-radius: 12px;
   height: 200px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);   
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 20px;
 }
@@ -38,9 +37,7 @@
   padding: 40px;
 }
 
-
-
-.grid div button{
+.grid div button {
   background-color: #4c6aaf;
   color: #fff;
   padding: 10px 20px;

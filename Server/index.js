@@ -411,6 +411,62 @@ app.post("/getmessages", async (req, res) => {
   }
 });
 
+app.post("/appointment/approve", async (req, res) => {
+  const { appointmentId } = req.body;
+
+  if (!appointmentId)
+    return res.status(400).json({
+      status: false,
+      error: {
+        message: "Appointmet id required",
+      },
+    });
+  try {
+    const appointment = await Appointment.findOneAndUpdate(
+      { _id: appointmentId },
+      { approved: true }
+    );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      status: false,
+      error: {
+        message: "Error encountered",
+      },
+    });
+  }
+  return res.status(200).json({
+    status: true,
+    data: {
+      message: "appointment approved",
+    },
+  });
+});
+
+app.post("/appointment/reject", async (req, res) => {
+  const { appointmentId } = req.body;
+
+  if (!appointmentId)
+    return res.status(400).json({
+      status: false,
+      error: {
+        message: "Appointment id required",
+      },
+    });
+
+  const appointment = await Appointment.findOneAndUpdate(
+    { _id: appointmentId },
+    { approved: false }
+  );
+
+  return res.status(200).json({
+    status: true,
+    data: {
+      message: "appointment rejected",
+    },
+  });
+});
+
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log("Connected");
   app.listen(1602, () => {
